@@ -840,7 +840,33 @@ auditfilter system_app sys_usb_rawbulk:dir search;
 # https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3631
 auditfilter hal_graphics_composer_default mtk_secure_venc_prop:file read;
 
-https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3619
+# https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3619
 auditfilter hal_camera_default media_rw_data_file:dir search;
 auditfilter hal_camera_default default_prop:file read;
+
+# https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3654
+auditfilter aee_aedv default_prop:file { open read getattr map }; comm="aee_aedv"
+auditfilter aee_aedv metadata_file:dir getattr; comm="df"
+auditfilter aee_aedv cache_file:dir getattr; comm="df"
+auditfilter aee_aedv overlayfs_file:dir getattr; comm="df"
+auditfilter aee_aedv apexd_prop:file { open getattr }; comm="aee_dumpstatev"
+
+# https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3689
+auditfilter crash_dump app_fonts_data_file:file { open read getattr };
+
+# http://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3703
+auditfilter vold keyfota_data_file:file ioctl;
+
+# http://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3717
+auditfilter mediametrics runtime_event_log_tags_file:file getattr;
+
+# https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3725
+auditfilter apexserver hal_codec2_hwservice:hwservice_manager find;
+
+# https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3731
+auditfilter nfc runtime_event_log_tags_file:file getattr;
+auditfilter nfc gpuservice:binder call;
+
+# https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3750
+auditfilter hal_wifi_supplicant_default hal_wifi_supplicant_default:capability sys_admin;
 

@@ -684,6 +684,16 @@ vendor.tmfd                    u:object_r:vendor_tmfd_prop:s0
 cid.funcType                  u:object_r:vendor_mbim_prop:s0
 persist.ril.mbimstub          u:object_r:vendor_mbim_prop:s0
 
+# https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3735
+camera.cpp.dumppreviewpayload                  u:object_r:vendor_camera_prop:s0
+
+# https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3755
+ro.appsflyer.preinstall.path                   u:object_r:exported_config_prop:s0
+
+# https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3756
+ro.sys.kernelmemory.nandswap.                   u:object_r:vendor_zram_prop:s0
+
+
 #line 1 "system/sepolicy/public/property_contexts"
 # vendor-init-readable
 persist.radio.airplane_mode_on u:object_r:exported2_radio_prop:s0 exact int
