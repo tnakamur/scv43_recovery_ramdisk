@@ -2,7 +2,7 @@
 # for recovery (global)
 
 on init-recovery
-    mount --option=ro /system
+#    mount --option=ro /system
 
     mount -f /cache
     ls /cache/recovery/
@@ -16,17 +16,17 @@ on init-recovery
 
 on init-history
 # Make command history file.
-    mount -f /cache
+#   mount -f /cache
 
     df /efs
     mkdir -f radio system 0771 /efs/recovery
     touch -f /efs/recovery/history
 
-    echo "+ [<log_prefix>]" >> /efs/recovery/history
-    cat -f /cache/recovery/command >> /efs/recovery/history
+#   echo "+ [<log_prefix>]" >> /efs/recovery/history
+#   cat -f /cache/recovery/command >> /efs/recovery/history
 
-    cp -y -f -v /efs/recovery/history /cache/recovery/last_history
-    chown -f system system /cache/recovery/last_history
+#   cp -y -f -v /efs/recovery/history /cache/recovery/last_history
+#   chown -f system system /cache/recovery/last_history
 
 on init-history-command
 # write misc command to history file
@@ -59,7 +59,7 @@ on checking-log
 
 # running --data_resizing with the userdata binaray
 on resizing-data
-    mount --option=ro /system
+#    mount --option=ro /system
 
     exec -f "/system/bin/e2fsck -y -f <dev_node:/data>"
     mount --option=ro /data
@@ -75,7 +75,26 @@ on resizing-data
     verfiy_data <dev_node:/data> /data 5
     verfiy_data --size-from-file=/tmp/data.list
     unmount /data
-        
+
+# running --data_resizing-f2fs with the userdata binaray
+on resizing-data-f2fs
+#    mount --option=ro /system
+
+    mount --option=ro /data
+    find -v --print=/tmp/data.list /data
+    unmount /data
+
+    loop_begin 2
+        exec -f "/system/bin/fsck.f2fs -y <dev_node:/data>"
+        exec "/system/bin/resize.f2fs -t <sector_size> <dev_node:/data>"
+    loop_end
+
+    mount --option=ro /data
+    df /data
+    verfiy_data <dev_node:/data> /data 5
+    verfiy_data --size-from-file=/tmp/data.list
+    unmount /data
+
 # only run command csc_factory
 on pre-multi-csc
     precondition define /carrier
@@ -179,6 +198,7 @@ on exec-install-preload
 
 on rm-wipe-app-data
     echo "-- rm-wipe-app-data..."
+    mount -f /efs
     mkdir -f radio system 0771 /efs/recovery
     rm -v -f /efs/recovery/rescueparty
     write -f /efs/recovery/rescueparty "emergency_reset\n"
@@ -291,6 +311,12 @@ on omc_sysconfig_permission
 
 on omc_permissions_permission
     chmod -v -r --type=directory 0755 /system/omc/<salse_code>/etc/permissions/
+
+on omc_sysconfig_permission_carrierid
+    chmod -v -r --type=directory 0755 /system/omc/<carrier_id>/etc/cid/sysconfig/
+
+on omc_permissions_permission_carrierid
+    chmod -v -r --type=directory 0755 /system/omc/<carrier_id>/etc/cid/permissions/
 
 on omc_res_permission
     chmod -v -r --type=directory 0755 /system/omc/<salse_code>/res/
