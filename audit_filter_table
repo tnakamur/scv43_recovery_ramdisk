@@ -870,3 +870,6 @@ auditfilter nfc gpuservice:binder call;
 # https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3750
 auditfilter hal_wifi_supplicant_default hal_wifi_supplicant_default:capability sys_admin;
 
+# https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3865
+auditfilter wcnss_service proc_wifi_dbg:file read;
+

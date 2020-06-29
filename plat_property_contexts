@@ -693,6 +693,11 @@ ro.appsflyer.preinstall.path                   u:object_r:exported_config_prop:s
 # https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3756
 ro.sys.kernelmemory.nandswap.                   u:object_r:vendor_zram_prop:s0
 
+# https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3840
+camera.secure.mode                 u:object_r:sec_camera_prop:s0
+
+# https://mobilerndhub.sec.samsung.net/its/browse/SEANDROID-3847
+ro.sf.sub_display_orientation      u:object_r:exported3_default_prop:s0
 
 #line 1 "system/sepolicy/public/property_contexts"
 # vendor-init-readable
